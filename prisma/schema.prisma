@@ -1,0 +1,50 @@
+// This is your Prisma schema file.
+// Learn more: https://pris.ly/d/prisma-schema
+
+// =========================================================================
+// HOW TO MANAGE YOUR PRISMA DATABASE
+// =========================================================================
+//
+// 1. GENERATE THE CLIENT (Run this after ANY schema changes)
+//    npx prisma generate
+//
+// 2. PUSH OR UPDATE THE DATABASE (Run this to apply schema changes to PostgreSQL)
+//    npx prisma db push
+//    (Or use 'npx prisma migrate dev --name <name>' to track migrations)
+//
+// 3. HOW TO ADD A NEW TABLE
+//    Define a new model block at the bottom of this file. Example:
+//    model Product {
+//      id        String   @id @default(cuid())
+//      name      String
+//      price     Float
+//      createdAt DateTime @default(now())
+//      @@map("tbl_products") // Optional: maps the table name in the DB
+//    }
+//    Then run step 1 and step 2 to generate the client and apply it to the DB.
+// =========================================================================
+
+generator client {
+  provider = "prisma-client"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id        String    @id @default(cuid())
+  username  String    @unique
+  password  String
+  name      String?
+  role      String    @default("USER")
+  position  String
+  image     Bytes?
+  isActive  Boolean   @default(true)
+  lastLogin DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  @@map("tbl_users")
+}
