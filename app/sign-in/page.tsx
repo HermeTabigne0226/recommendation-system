@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -8,6 +8,13 @@ import axios from "axios";
 
 export default function SignIn() {
   const router = useRouter();
+
+  useEffect(() => {
+    if (localStorage.getItem("user")) {
+      router.push("/dashboard");
+    }
+  }, [router]);
+
   const [showPassword, setShowPassword] = useState(false);
   const [username, setUsername] = useState("");
   const [usernameError, setUsernameError] = useState("");
@@ -39,7 +46,11 @@ export default function SignIn() {
     setError("");
 
     try {
-      await axios.post("/api/auth/login", { username, password });
+      const response = await axios.post("/api/auth/login", { username, password });
+
+      if (response.data.success && response.data.user) {
+        localStorage.setItem("user", JSON.stringify(response.data.user));
+      }
 
       // Redirect to homepage on successful login
       router.push("/dashboard");

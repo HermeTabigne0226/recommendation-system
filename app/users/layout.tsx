@@ -1,9 +1,9 @@
-"use client";
+﻿"use client";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import SideBar from "../../components/sidebar";
 
-export default function DashboardLayout({
+export default function UsersLayout({
   children,
 }: {
   children: React.ReactNode;

@@ -50,14 +50,34 @@ export async function POST(request: Request) {
       data: { lastLogin: new Date() },
     });
 
+    const base64Image = user.image
+      ? `data:image/png;base64,${Buffer.from(user.image).toString("base64")}`
+      : null;
+
+    const fullName = [
+      user.firstName,
+      user.middleName,
+      user.lastName,
+      user.suffix,
+    ]
+      .filter(Boolean)
+      .join(" ");
+
     // 5. Return success and user details (excluding password)
     return NextResponse.json({
       success: true,
       user: {
         id: user.id,
+        userId: user.userId,
         username: user.username,
-        name: user.name,
+        firstName: user.firstName,
+        middleName: user.middleName,
+        lastName: user.lastName,
+        suffix: user.suffix,
+        name: fullName,
         role: user.role,
+        position: user.position,
+        image: base64Image,
       },
     });
   } catch (error) {

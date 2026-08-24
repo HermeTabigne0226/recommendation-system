@@ -1,7 +1,18 @@
+"use client";
+
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 
 export default function Home() {
+  const router = useRouter();
+
+  useEffect(() => {
+    if (localStorage.getItem("user")) {
+      router.push("/dashboard");
+    }
+  }, [router]);
   return (
     <div
       className="flex flex-col justify-center items-center min-h-screen bg-cover bg-center bg-no-repeat px-4 relative"

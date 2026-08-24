@@ -34,17 +34,31 @@ datasource db {
 }
 
 model User {
-  id        String    @id @default(cuid())
-  username  String    @unique
-  password  String
-  name      String?
-  role      String    @default("USER")
-  position  String
-  image     Bytes?
-  isActive  Boolean   @default(true)
-  lastLogin DateTime?
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  id         String    @id @default(cuid())
+  userId     Int       @unique @default(autoincrement())
+  username   String    @unique
+  password   String
+  firstName  String?
+  middleName String?
+  lastName   String?
+  suffix     String?
+  role       String    @default("USER")
+  position   String
+  image      Bytes?
+  isActive   Boolean   @default(true)
+  lastLogin  DateTime?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
 
   @@map("tbl_users")
+}
+
+model Positions {
+  id        Int      @id @default(autoincrement())
+  userId    Int?
+  position  String   @unique
+  createdAt DateTime @default(now())
+  createdBy String?
+
+  @@map("tbl_positions")
 }
