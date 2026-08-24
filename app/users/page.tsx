@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState, useEffect } from "react";
 import axios from "axios";
@@ -489,6 +489,7 @@ export default function UsersPage() {
       />
 
       <EditUserModal
+        key={selectedUser?.id || "edit-modal"}
         isOpen={isEditModalOpen}
         user={selectedUser}
         onClose={() => setIsEditModalOpen(false)}

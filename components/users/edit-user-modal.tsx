@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState, useEffect } from "react";
 import axios from "axios";
@@ -35,36 +35,18 @@ export default function EditUserModal({
 }: EditUserModalProps) {
   const [editFormLoading, setEditFormLoading] = useState(false);
   const [editFormError, setEditFormError] = useState("");
-  const [editFormData, setEditFormData] = useState({
-    id: "",
-    username: "",
+  const [editFormData, setEditFormData] = useState(() => ({
+    id: user?.id || "",
+    username: user?.username || "",
     password: "",
-    firstName: "",
-    middleName: "",
-    lastName: "",
-    suffix: "",
-    role: "USER",
-    position: "",
-    isActive: true,
-  });
-
-  useEffect(() => {
-    if (user) {
-      setEditFormError("");
-      setEditFormData({
-        id: user.id,
-        username: user.username,
-        password: "",
-        firstName: user.firstName || "",
-        middleName: user.middleName || "",
-        lastName: user.lastName || "",
-        suffix: user.suffix || "",
-        role: user.role,
-        position: user.position,
-        isActive: user.isActive,
-      });
-    }
-  }, [user]);
+    firstName: user?.firstName || "",
+    middleName: user?.middleName || "",
+    lastName: user?.lastName || "",
+    suffix: user?.suffix || "",
+    role: user?.role || "USER",
+    position: user?.position || "",
+    isActive: user ? user.isActive : true,
+  }));
 
   if (!isOpen || !user) return null;
 
